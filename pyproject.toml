@@ -1,0 +1,18 @@
+[project]
+name = "comfyui-huelake"
+description = "Huelake's ComfyUI custom nodes: XY Grid tools, axis converters, text scheduling, and utility nodes"
+version = "1.0.0"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = [
+    "Pillow",
+    "numpy",
+]
+
+[project.urls]
+Repository = "https://github.com/huelake/ComfyUi-Huelake"
+
+[tool.comfy]
+PublisherId = "huelake"
+DisplayName = "Huelake Nodes"
+Icon = ""
