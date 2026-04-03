@@ -1,4 +1,5 @@
-import torch
+import re
+
 
 class TextSchedulerNode:
     @classmethod
@@ -9,22 +10,27 @@ class TextSchedulerNode:
                 "index": ("INT", {"default": 0, "min": 0, "max": 9999}),
             },
         }
-    
+
     RETURN_TYPES = ("STRING",)
     FUNCTION = "schedule_text"
     CATEGORY = "scheduling"
 
     def schedule_text(self, text_input, index):
-        # Split the input text by lines and filter out lines containing '----'
-        lines = text_input.split('\n')
+        # Split on "---- #" delimiter lines (e.g. "---- #1 Title")
+        sections = re.split(r'----\s*#', text_input)
         scheduled_texts = []
-        
-        for line in lines:
-            line = line.strip()
-            # Skip empty lines and lines containing '----'
-            if line and '----' not in line:
-                scheduled_texts.append(line)
-        
+
+        for section in sections:
+            # Strip the section number/title from the first line, keep the rest
+            lines = section.strip().splitlines()
+            if not lines:
+                continue
+            # The first line after the split contains the number and title (e.g. "1 Comic Page Layout")
+            # Skip it and use the remaining content as the prompt
+            content = '\n'.join(lines[1:]).strip() if len(lines) > 1 else lines[0].strip()
+            if content:
+                scheduled_texts.append(content)
+
         # Return the text at the specified index, cycling if index is out of range
         if len(scheduled_texts) > 0:
             selected_index = index % len(scheduled_texts)
