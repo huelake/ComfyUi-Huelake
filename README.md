@@ -9,7 +9,7 @@ Based on [qq-nodes-comfyui](https://github.com/kenjiqq/qq-nodes-comfyui) by kenj
 ## Installation
 
 ### Via ComfyUI Manager
-Search for **Huelake Nodes** in ComfyUI Manager and click **Install**.
+Click **Install via git url** in ComfyUI Manager and click **Install**.
 
 ### Manual
 
